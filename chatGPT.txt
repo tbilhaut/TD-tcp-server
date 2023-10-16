@@ -1,0 +1,45 @@
+// ...
+void InitiationQt::onSendButtonClicked() {
+    if (socket->state() == QTcpSocket::ConnectedState) {
+        QString message = ui.plainTextEdit->toPlainText(); // Récupérer le texte de plainTextEdit
+        socket->write(message.toUtf8()); // Envoyer le message au serveur
+    }
+}
+// ...
+InitiationQt::InitiationQt(QWidget *parent)
+    : QMainWindow(parent)
+{
+    // ... autres initialisations
+
+    connect(ui.pushButton, &QPushButton::clicked, this, &InitiationQt::onSendButtonClicked);
+}
+// ...
+void InitiationQt::onSendButtonClicked() {
+    if (socket->state() == QTcpSocket::ConnectedState) {
+        QString message = ui.plainTextEdit->toPlainText(); // Récupérer le texte de plainTextEdit
+        QByteArray sendData = message.toUtf8(); // Convertir en QByteArray pour l'envoi
+        qint64 bytesWritten = socket->write(sendData); // Envoyer le message au serveur
+        if (bytesWritten == -1) {
+            ui.label_5->setText("Échec de l'envoi du message !");
+        } else {
+            ui.label_5->setText("Message envoyé avec succès !");
+        }
+    } else {
+        ui.label_5->setText("La connexion n'est pas établie !");
+    }
+}
+// ...
+// ...
+void InitiationQt::onSocketReadyRead() {
+void InitiationQt::onServerNewConnection() {
+    ui.connectToHost->setText("Un client s'est connecté");
+    QTcpSocket * client = server->nextPendingConnection();
+    QObject::connect(client, SIGNAL(readyRead()), this, SLOT(ClientReadyRead())); // Modifier cette ligne
+    QObject::connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
+}
+
+    QByteArray data = socket->readAll(); // Lire les données reçues
+    QString receivedMessage(data); // Convertir en QString
+    ui.label_6->setText("Message reçu : " + receivedMessage); // Afficher le message dans label_6
+}
+// ...
