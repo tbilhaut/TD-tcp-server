@@ -1,6 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: Le répertoire intermédiaire (x64\Debug\) contient des fichiers partagés provenant d'un autre projet (InitiationQt.vcxproj). Cela peut entraîner un comportement de nettoyage et de régénération incorrect.
-  InitiationQt.cpp
-  main.cpp
-  qrc_InitiationQt.cpp
-  moc_InitiationQt.cpp
-  InitiationQt.vcxproj -> C:\Users\tbilhaut\source\repos\ClientQT\x64\Debug\ClientQT.exe
